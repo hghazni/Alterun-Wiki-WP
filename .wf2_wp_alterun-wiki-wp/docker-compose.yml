@@ -4,6 +4,17 @@ volumes:
   db-data:
     name: wf2__alterun-wiki-wp__db-data
 services:
+  wp:
+    container_name: wf2__alterun-wiki-wp__wp
+    image: "wordpress:cli"
+    volumes:
+      - "/Users/hghazni/Sites/alterun-wiki-wp:/var/www"
+    depends_on:
+      - php
+    working_dir: /var/www
+    environment:
+      - DB_HOST=db
+    init: true
   db:
     container_name: wf2__alterun-wiki-wp__db
     image: "mysql:5.7"
@@ -51,14 +62,3 @@ services:
     working_dir: /var/www
     environment:
       - XDEBUG_ENABLE=true
-  wp:
-    container_name: wf2__alterun-wiki-wp__wp
-    image: "wordpress:cli"
-    volumes:
-      - "/Users/hghazni/Sites/alterun-wiki-wp:/var/www"
-    depends_on:
-      - php
-    working_dir: /var/www
-    environment:
-      - DB_HOST=db
-    init: true
